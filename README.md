@@ -4,7 +4,7 @@
 
 `coalesce` allows for easy unification of disjoint types, often useful for combining multiple
 concrete instances into a common trait object. You can run an arbitrary code block over each
-item, see the API docs for example usage.
+item, see the [API docs][docs] for example usage.
 
 [travis-badge]: https://img.shields.io/travis/arcnmx/coalesce-rs/master.svg?style=flat-square
 [travis]: https://travis-ci.org/arcnmx/coalesce-rs
