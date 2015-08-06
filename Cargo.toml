@@ -1,0 +1,11 @@
+[package]
+name = "coalesce"
+version = "0.1.0"
+authors = ["arcnmx"]
+
+description = "Combine disjoint types that share common traits."
+documentation = "http://arcnmx.github.io/coalesce-rs/coalesce/"
+repository = "https://github.com/arcnmx/coalesce-rs"
+readme = "README.md"
+keywords = ["trait", "either", "coalesce"]
+license = "MIT"

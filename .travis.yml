@@ -1,0 +1,36 @@
+env:
+    global:
+        - secure: "uRCZzq/uYjNlr5hUJC1N5o7MVRuZl8hR8I38+aw6ansV5EoRxjYrpqvv0mNQ+tQexU63XWtv3yoTqfV3fc7zR8jFHgapxaeIlsIVEjRAqlhXUNMF+NdyzksC65U5104aV0p0RJHCSdCJEfHwS7sOE6VYFRA2wao5t0badlh5gxTsQuf/cj8lGciuvrsMyM3ownD4I4rwTqMce8WQ7Sk/lz8WNbA0335yspY0yFvWksScikF6HB5ytzPYWwc9sfrRkN9kd3qbdglxtmwYJUSIL95ua8C6ow7v56KT8XnQxxOy4yDIibRcgMhrsV5KNFAetmJP9TBUPW15BFOfokfDLoFZubg/swinZFPgQCMkjNeSEQT3flZqdp1uptXgYoS0dTaQmTCIHKcDEfo0Tcq3GZOEGWvruvQUjjQqgphrgTTOUvyr8PmPpbLZuFikYjvxT1NzLSYsBMRkt9gbMFt87eaJzXxC7Rcdy224jSsSTT2+xlXQMW9D5orzAyCdUEzsFVoh4lvWe+m/kOk73QTGcOOgdoV/OoRVT0g0m1LbxvyV8ByPWSwrdYtjvEKUxXbu/FaZgV+zT4QWt+6gYQsVaGq/igLUN8FzYsM6I8HDbxnRwxUBO0rwnaqrhqY0LuitbmsRIpBRZHo1I7uXx1DO/tXq/mxuRbTrQjXIML9WpCo="
+        - secure: "0LWab1tNNsoSg8IqXHuU2xEvZdQLhc1dvIo3/S/3iVZ3oBvUEoz8K1uT7bal6tECKy1D1OsMw59rlEpgUAp6mpnzCk5Ah9xQb9ooiWpwVkCo/56lPS+0XszAppcOEpj2VU/vrdUH8PAKKiUA+xYWecXAsJCklLCX7myt/wsQ6A5sricdh4e3672Fy50eV7BojF9UBm4D/e0Hixd4f+YLSRj1sEYI2kdwb0K6ATLxGNPYxkid2m9+u3ue7RkLFgR94U6U0G9qOw9I8BD356X8lJq6Wbq5l/FLWJyHmQCywIs5t20gGD1YWTTjZTPd9U2SbZBEEsgPqKJZU1Ijo0Ib6lSu8Usrvby4jbRioMkgQbpv2UGvNKGeZIliLhGQ+WzQHNrY7nsKH7xWXO/hoSicyW4Y1DdUz84KxksvwW5dCiESby25roAdUB4sSaskJ+kDQ4dLAVj9xeotU5VgISIrUdMRsOyp/096m/7isN0FUFJjkZ/ZXrjeXjVkAmuaYB3hm7+foreu0bLMgpHSs3r3L4oWW/qIck8ngNwPfBB80rSQGI+9h/wpZZs0P0OJBEi9UeEOHzKooW1GShKmXtZOscn/U3Yc/CMS/u06PBMLx297WvpVlMf7m7tOi4px5UK97DN/+bf/lSZUkUPw1sr6faoiMlDXcKgQ/IfVpmT20mA="
+
+language: rust
+rust:
+    - nightly
+    - beta
+    - stable
+sudo: false
+
+os:
+    - linux
+
+script:
+    - cargo test -v
+
+before_deploy:
+    - cargo doc --no-deps -v
+    - cargo package -v
+
+deploy:
+    provider: releases
+    api_key:
+        secure: "An7siT2QQezTf39DxFLUhKXcaeSRazHx0T7444kMMrW1FHLhy7PMAk7PMRKgcGDLPMy41b5LbBuIWZ4PlUSvaodia3m+ukL1fbfipszVpyMolIm5hLBNKDfWTVGCilbyu64ePJWoCw138Cst0pybywHc+vpfg9/NbVUUmvsiLLaiWUstryo4NkGibxGfjfrEiK9L9LDhPpggqSEmfOk47dUwkc6S7cBRhJ1YomA2OCNKAa36PPZF84RKHo/IK/qQ0t7OEr7egdZ3IuaskMtd2je40baeaBoycYdvj7JGQhyCiLm0jy11n3c9lOMoPgIl4U0X+UFq22zQeVqy/5fbrdXHicv6mPz5MDEHuvlh/ksY+DfG7sEjxItFmvFeGI7M99fCkSGitTT94NYZqNkL0xaLUNumAD4f0vds0RlvQgT0TxznHmvjZLIH1QVJtOHb3X3yRfUcZKC/dzFbYmhW+KUUnQ2jcb1rr2fSExVigDpIlJyBRTAdCqjzL2UViJyAoI77WJBRUFtby0W5xaQeLGdcVUZ6Qr3860Ta41uH3saZUv4IaFxn2y9fuj1WVuPXgO0CGB1KOq/y7EWbe4H7AwgpZEIaM0Kul2b6X24zTvI2NwU60Fri2cw1eI+6xEGuf72lC1HGGuWPD/TOAchMH03WiSXUq7HWFMCmvkuU+7s="
+    file: target/package/coalesce-$TRAVIS_TAG.crate
+    skip_cleanup: true
+    on:
+        tags: true
+        all_branches: true
+        condition: "$TRAVIS_RUST_VERSION = stable"
+
+after_deploy:
+    - .travis/publish_docs.sh "$TRAVIS_TAG"
+    - cargo publish --token "$CRATES_IO_TOKEN"
