@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Coalesce0",""],["Coalesce1",""],["Coalesce2",""],["Coalesce3",""],["Coalesce4",""],["Coalesce5",""],["Coalesce6",""],["Coalesce7",""],["Coalesce8",""],["Coalesce9",""]],"macro":[["coalesce!","Coalesces multiple values into one common (often borrowed) type."]]});
