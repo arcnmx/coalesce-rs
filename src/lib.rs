@@ -28,8 +28,27 @@
 
 macro_rules! coalesce_ {
     ($i:ident: $($v:ident: $t:ident),*) => {
+        #[derive(Copy, Clone, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
         pub enum $i<$($t),*> {
             $($v($t)),*
+        }
+
+        impl<$($t),*> $i<$($t),*> {
+            pub fn as_ref(&self) -> $i<$(&$t),*> {
+                match *self {
+                    $(
+                        $i::$v(ref v) => $i::$v(v)
+                    ),*
+                }
+            }
+
+            pub fn as_mut(&mut self) -> $i<$(&mut $t),*> {
+                match *self {
+                    $(
+                        $i::$v(ref mut v) => $i::$v(v)
+                    ),*
+                }
+            }
         }
     };
 }
