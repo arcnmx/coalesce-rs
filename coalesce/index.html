@@ -45,13 +45,13 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-0' class='srclink' href='../src/coalesce/lib.rs.html#1-119' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-0' class='srclink' href='../src/coalesce/lib.rs.html#1-138' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Coalesce allows you to unify disjoint types on the stack.</p>
 
 <p>It is often useful to return different implementations of a common trait such as
 <code>Iterator</code> or <code>Read</code> from conditional branches. The <code>coalesce!</code> macro makes it
 easy to unify them into a common trait object:</p>
-<pre id='rust-example-rendered' class='rust '>
+<pre class='rust rust-example-rendered'>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>coalesce</span>;
 
